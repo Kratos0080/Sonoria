@@ -1,0 +1,1341 @@
+/**
+ * Styles for the NoteChat plugin chat interface
+ */
+
+/* Chat container */
+.chat-view {
+  font-family: var(--font-interface);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure it tries to take full height */
+  overflow: hidden; /* Prevent scrollbars on the main view, children should handle scrolling */
+  margin: 0; /* Remove any margin */
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  position: relative;
+}
+
+/* Chat header */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background-color: var(--background-secondary);
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.close-button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.close-button:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+/* Messages container */
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.empty-messages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px;
+}
+
+.empty-messages-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-messages h3 {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.empty-messages p {
+  margin: 0;
+  max-width: 300px;
+}
+
+/* Messages */
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chat-message {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.user-message {
+  background-color: var(--background-primary);
+  border-left: 3px solid var(--text-accent);
+}
+
+.assistant-message {
+  background-color: var(--background-secondary);
+  border-left: 3px solid var(--text-muted);
+}
+
+.chat-message.has-collapsible-content {
+  padding-bottom: 8px;
+}
+
+.chat-message.has-collapsible-content .message-content-container {
+  position: relative;
+}
+
+.chat-message.has-collapsible-content .collapsible-message {
+  margin-top: 4px;
+}
+
+.chat-avatar {
+  display: none; /* Hide avatars */
+}
+
+.message-content-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.message-role {
+  font-weight: 600;
+}
+
+.message-timestamp {
+  color: var(--text-muted);
+}
+
+.message-text {
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.message-text pre {
+  background-color: var(--code-background);
+  border-radius: 4px;
+  padding: 8px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.message-text code {
+  font-family: var(--font-monospace);
+  font-size: 0.9em;
+  padding: 2px 4px;
+  background-color: var(--code-background);
+  border-radius: 4px;
+}
+
+.message-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.action-button {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  color: var(--text-muted) !important;
+  transition: color 0.2s ease !important;
+  margin-left: 10px !important; /* Add some space between multiple action buttons */
+  text-decoration: none !important; /* Remove any default underline */
+  box-shadow: none !important;
+  min-width: auto !important;
+  min-height: auto !important;
+}
+
+.action-button:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Loading indicator */
+.loading-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  gap: 8px;
+}
+
+.loading-indicator {
+  display: flex;
+  gap: 4px;
+}
+
+.loading-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--text-muted);
+  border-radius: 50%;
+  animation: loading-dot 1.4s infinite ease-in-out;
+}
+
+.loading-dot:nth-child(1) { animation-delay: 0s; }
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
+.loading-dot:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes loading-dot {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.6; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.loading-text {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Code blocks */
+.code-block-container {
+  margin: 8px 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--background-modifier-border);
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  background-color: var(--background-secondary);
+  border-bottom: 1px solid var(--background-modifier-border);
+  font-size: 12px;
+}
+
+.code-language {
+  font-family: var(--font-monospace);
+  color: var(--text-muted);
+}
+
+.copy-code-button {
+  background: transparent;
+  border: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--text-normal);
+  font-size: 12px;
+}
+
+.copy-code-button:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.code-block {
+  margin: 0;
+  overflow-x: auto;
+  padding: 8px;
+  font-family: var(--font-monospace);
+  font-size: 0.9em;
+  background-color: var(--code-background);
+  line-height: 1.5;
+}
+
+/* Message expand/collapse */
+.message-expand-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-accent);
+  cursor: pointer;
+  padding: 4px 0;
+  font-size: 12px;
+  text-align: left;
+}
+
+.message-expand-toggle:hover {
+  text-decoration: underline;
+}
+
+/* --- Phase 3/4 Layout Styles --- */
+
+/* Main container for the chat interface */
+.notechat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  flex: 1; 
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  position: relative; 
+  overflow: hidden; 
+}
+
+/* Header with title and controls */
+.notechat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background-color: var(--background-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.notechat-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.notechat-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notechat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.notechat-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.notechat-context-counter {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.notechat-button-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notechat-button-icon:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Loading states for header action icons - following note chip pattern */
+.notechat-header__action-icon--recycle.loading-recycling {
+  background: rgba(59, 130, 246, 0.5) !important; /* Soft blue with 50% transparency */
+  border: 2px solid rgba(59, 130, 246, 0.3) !important; /* Subtle blue border */
+  color: var(--text-normal) !important;
+  font-weight: 500 !important;
+  animation: loading-pulse-recycling 1.2s ease-in-out infinite alternate !important;
+  transform: scale(1.05) !important; /* Subtle scale increase */
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3) !important; /* Soft blue glow */
+  z-index: 9999 !important;
+  position: relative !important;
+}
+
+.notechat-header__action-icon--recycle.loading-recycling svg {
+  animation: spin-recycling 1s linear infinite !important; /* Spinning refresh icon */
+}
+
+@keyframes loading-pulse-recycling {
+  0% {
+    opacity: 0.7;
+    background: rgba(59, 130, 246, 0.3);
+  }
+  100% {
+    opacity: 1.0;
+    background: rgba(59, 130, 246, 0.6);
+  }
+}
+
+@keyframes spin-recycling {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* NEW: Style for the fold/unfold button in the header */
+.notechat-header__fold-button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 8px; /* Space between title and button */
+  border-radius: 4px;
+  display: flex; /* To align icon inside button properly */
+  align-items: center;
+  justify-content: center;
+}
+
+.notechat-header__fold-button:hover {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+/* Messages container */
+.notechat-messages-container {
+  flex: 1 1 auto; 
+  min-height: 0; 
+  overflow-y: auto; 
+  padding: 16px;
+  padding-bottom: 70px; /* Space for the fixed input area */
+}
+
+/* Input container */
+.notechat-container .notechat-input-container { 
+  padding: 8px 12px; 
+  border-top: 1px solid var(--background-modifier-border);
+  background-color: var(--background-secondary-alt);
+  display: flex;
+  align-items: center; 
+  gap: 6px; 
+  position: fixed; /* Change to fixed positioning */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%; /* Ensure it takes full width */
+  box-sizing: border-box; /* Include padding in width */
+  z-index: 10; /* Ensure it stays above other content */
+}
+
+/* Wrapper for Text or Voice Input Area */
+.notechat-input-container .notechat-input-area__main-wrapper { 
+  flex: 1; 
+  /* position: relative; /* REMOVED: Context is now the input container */
+  display: flex; 
+  align-items: center; 
+}
+
+/* Text Input Area Container */
+.notechat-input-area__main-wrapper .text-input-area { 
+  display: flex; 
+  align-items: stretch; /* CHANGED: Allow items to stretch vertically */
+  background-color: var(--background-primary); 
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px; 
+  padding: 2px 6px; /* Reduced padding slightly more */
+  gap: 4px; 
+  flex: 1;
+}
+
+/* ChatInput (textarea) styling within TextInputArea */
+.text-input-area .message-input-container { 
+  flex: 1;
+  padding: 0; 
+  background: none;
+  border: none;
+  align-self: stretch; /* Stretch to fill height */
+}
+
+.text-input-area .message-input { 
+  padding: 0 4px; 
+  margin: 2px 0; 
+  min-height: 1.4em !important; /* Set min-height relative to font-size, override defaults */
+  height: auto; 
+  max-height: 100px; 
+  line-height: 1.3; 
+  background: transparent;
+  font-size: var(--font-ui-small); 
+  width: 100%; 
+  align-self: stretch; /* Stretch to fill height */
+  display: block; 
+  resize: none; 
+}
+
+/* Container for the buttons */
+.text-input-area .text-input-area__buttons { 
+  display: flex;
+  align-items: center; /* Keep buttons centered vertically for now */
+  gap: 4px; 
+}
+
+/* --- Standardize Button Sizes (Revision 5 - 30x30px) --- */
+.notechat-input-container .mic-toggle-button,
+.text-input-area .suggested-prompts-button,
+.text-input-area .send-button,
+.text-input-area .mode-toggle-button,
+.voice-input-area .mode-toggle-button { 
+  width: 30px !important;  /* CHANGED size */
+  height: 30px !important; /* CHANGED size */
+  min-width: 30px !important; /* CHANGED size */
+  border-radius: 4px !important; 
+  display: flex !important; 
+  align-items: center !important; 
+  justify-content: center !important; 
+  padding: 0 !important; 
+  border: none !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important; 
+}
+
+/* Specific Button Styles */
+.mic-toggle-button {
+  background-color: var(--background-secondary);
+  color: var(--text-muted);
+  font-size: 14px;
+}
+.mic-toggle-button:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.mode-toggle-button {
+  background-color: var(--background-secondary);
+  color: var(--text-muted);
+  font-size: 14px;
+  position: relative;
+}
+.mode-toggle-button:hover {
+  background-color: var(--background-modifier-hover);
+}
+.mode-toggle-button.is-active {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+.mode-toggle-button.mod-warning {
+  background-color: var(--text-error);
+  color: var(--text-on-accent);
+}
+
+/* Mode toggle button internal layout - CRITICAL FOR VISUAL FEEDBACK */
+.mode-toggle-button {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  min-width: 30px !important;
+  width: auto !important; /* Allow width to grow for text */
+  max-width: 150px !important; /* Prevent it from getting too wide */
+}
+.mode-toggle-button .mode-toggle-icon {
+  display: block;
+  flex-shrink: 0;
+}
+.mode-toggle-button .mode-toggle-text {
+  display: none; /* Hidden by default */
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* CRITICAL: Show text when recording or in specific states */
+.mode-toggle-button.is-active .mode-toggle-text {
+  display: block !important;
+}
+
+.suggested-prompts-button {
+  background-color: var(--background-secondary);
+  color: var(--text-normal);
+  font-size: 14px;
+}
+.suggested-prompts-button:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.send-button {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  font-size: 15px; 
+}
+.send-button:hover {
+  background-color: var(--interactive-accent-hover);
+}
+.send-button.disabled {
+  background-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* 🛑 STOP GENERATION: Stop button styling */
+.send-button.stop-button {
+  background-color: var(--color-red);
+  color: white;
+}
+
+.send-button.stop-button:hover {
+  background-color: var(--color-red-hover, #dc2626);
+}
+
+/* Voice Input Area Layout */
+.voice-input-area {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 5px;
+  padding: 8px;
+  gap: 8px;
+  flex: 1;
+}
+
+.voice-input-area__main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 8px;
+}
+
+.voice-input-area__buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.voice-mode-indicator {
+  color: var(--interactive-accent);
+  font-size: var(--font-ui-medium);
+  font-weight: 500;
+  padding: 4px 8px;
+  background-color: var(--background-modifier-success);
+  border-radius: 4px;
+  border: 1px solid var(--interactive-accent);
+}
+
+/* Voice Mode Button (for recording in voice mode) */
+.notechat-voice-mode-button {
+  background-color: var(--background-secondary);
+  color: var(--text-muted);
+  border: none;
+  border-radius: 6px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  text-align: center;
+  margin: 0 4px;
+  width: calc(100% - 8px);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure icons render properly in voice mode button */
+.notechat-voice-mode-button svg {
+  flex-shrink: 0;
+  display: block;
+}
+
+.notechat-voice-mode-button:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.notechat-voice-mode-button.is-active {
+  background-color: var(--interactive-accent);
+}
+
+.notechat-voice-mode-button.recording {
+  background-color: var(--interactive-success);
+  animation: pulse 1.5s infinite;
+}
+
+.notechat-voice-mode-button.mod-warning {
+  background-color: var(--text-error);
+}
+
+/* Collapsible Message Styles */
+.collapsible-message {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.collapsible-message__content {
+  line-height: 1.6;
+  transition: all 0.3s ease;
+}
+
+.collapsible-message.is-collapsed .collapsible-message__content {
+  position: relative;
+  overflow: hidden;
+  max-height: 5em; /* Limit to approximately 5 lines of text */
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 20px), transparent 100%);
+  mask-image: linear-gradient(to bottom, black calc(100% - 20px), transparent 100%);
+}
+
+.collapsible-message.is-expanded .collapsible-message__content {
+  max-height: none;
+}
+
+.collapsible-message.is-collapsed .collapsible-message__content::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(transparent, var(--background-secondary));
+  pointer-events: none;
+}
+
+.collapsible-message__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--background-modifier-border-hover);
+}
+
+.collapsible-message__toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  color: var(--text-accent);
+  cursor: pointer;
+  font-size: var(--font-ui-smaller);
+  transition: all 0.2s ease;
+}
+
+.collapsible-message__toggle:hover {
+  background-color: var(--background-modifier-hover);
+  border-color: var(--text-accent);
+}
+
+.collapsible-message__toggle:focus {
+  outline: 2px solid var(--text-accent);
+  outline-offset: 2px;
+}
+
+.collapsible-message.voice-mode .collapsible-message__toggle:focus {
+  outline: 2px solid var(--background-modifier-border-hover);
+  outline-offset: 2px;
+}
+
+.collapsible-message__toggle .toggle-icon {
+  font-size: 10px;
+  transition: transform 0.2s ease;
+}
+
+.collapsible-message.is-expanded .collapsible-message__toggle .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.collapsible-message__metadata {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller);
+}
+
+.collapsible-message__preview {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: var(--background-modifier-form-field);
+  border-radius: 4px;
+  border-left: 3px solid var(--text-accent);
+  font-size: var(--font-ui-smaller);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Voice mode specific styles */
+.collapsible-message.voice-mode {
+  border-radius: 8px;
+  background-color: var(--background-modifier-form-field);
+}
+
+.collapsible-message.voice-mode.is-collapsed .collapsible-message__content::after {
+  /* Voice mode has different background, adjust fade accordingly */
+  background: linear-gradient(transparent, var(--background-modifier-form-field));
+}
+
+.collapsible-message.voice-mode .collapsible-message__controls {
+  background-color: var(--background-secondary);
+  border-radius: 0 0 8px 8px;
+  margin: 8px -12px -12px -12px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+/* 🔧 UI FIX: Make "Show More" button consistent with text mode color (accent color) */
+.collapsible-message.voice-mode .collapsible-message__toggle {
+  background-color: transparent;
+  color: var(--text-accent) !important;
+  border: 1px solid var(--background-modifier-border);
+  font-weight: normal;
+}
+
+.collapsible-message.voice-mode .collapsible-message__toggle:hover {
+  background-color: var(--background-modifier-hover);
+  border-color: var(--text-accent);
+  color: var(--text-accent) !important;
+}
+
+.collapsible-message.voice-mode .collapsible-message__metadata {
+  color: var(--text-muted);
+}
+
+.collapsible-message.voice-mode .collapsible-message__preview {
+  background-color: var(--background-primary);
+  border-left-color: var(--interactive-accent);
+}
+
+.notechat-voice-mode-button:disabled {
+  background-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Suggested Prompts Button Container */
+.suggested-prompts-container {
+  /* position: relative; /* REMOVED: Context is now the input container */
+}
+
+/* Suggested Prompts List Positioning (Relative to input container) */
+.suggested-prompts-list {
+  position: absolute;
+  bottom: calc(100% + 4px); 
+  left: 12px;  /* Match notechat-input-container horizontal padding */
+  right: 12px; /* Match notechat-input-container horizontal padding */
+  box-sizing: border-box; 
+  z-index: 1000;
+  
+  background-color: var(--background-primary);
+  border-radius: 6px; 
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--background-modifier-border);
+  list-style: none;
+  padding: 6px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Prompt Item */
+.prompt-item {
+  padding: 6px 10px;
+  font-size: var(--font-ui-small);
+  cursor: pointer;
+  border-radius: 4px;
+  color: var(--text-normal);
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+/* Hold to Talk Button */
+.hold-to-talk-button,
+.notechat-hold-button {
+  padding: 12px 16px; 
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  background-color: var(--background-secondary);
+  color: var(--text-muted);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box; 
+  flex: 1; 
+  text-align: center; 
+  min-width: 0;
+  margin: 0 4px;
+  width: calc(100% - 8px);
+}
+
+.hold-to-talk-button:hover,
+.notechat-hold-button:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+.notechat-hold-button.is-active {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+.notechat-hold-button.mod-warning {
+  background-color: var(--text-error);
+  color: var(--text-on-accent);
+}
+
+/* NEW: Make Context Area sticky when visible */
+.notechat-context-area {
+  position: sticky;
+  top: 51px; /* Fine-tuning the offset */
+  z-index: 99;
+  background-color: var(--background-primary); 
+  width: 100%;
+  padding: 8px 16px;        
+  box-sizing: border-box;
+  will-change: top; /* Hint for browser rendering optimization */
+}
+
+.notechat-selected-notes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.notechat-note-chip {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 12px;
+  padding: 4px 8px;
+  font-size: 13px;
+  max-width: 250px;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.notechat-note-chip:hover {
+  background-color: var(--background-modifier-hover);
+}
+
+/* Loading states for note chips - REFINED PROFESSIONAL ANIMATIONS */
+.notechat-note-chip.loading-adding {
+  background: rgba(34, 197, 94, 0.5) !important; /* Soft light green with 50% transparency */
+  border: 2px solid rgba(34, 197, 94, 0.3) !important; /* Subtle green border */
+  color: var(--text-normal) !important;
+  font-weight: 500 !important;
+  animation: loading-pulse-adding 1s ease-in-out infinite alternate !important;
+  transform: scale(1.05) !important; /* Subtle scale increase */
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.3) !important; /* Soft green glow */
+  z-index: 9999 !important;
+  position: relative !important;
+}
+
+.notechat-note-chip.loading-removing {
+  background: rgba(244, 114, 182, 0.5) !important; /* Soft pink with 50% transparency */
+  border: 2px solid rgba(244, 114, 182, 0.3) !important; /* Subtle pink border */
+  color: var(--text-normal) !important;
+  font-weight: 500 !important;
+  animation: loading-pulse-removing 0.8s ease-in-out infinite alternate !important;
+  transform: scale(1.05) !important; /* Subtle scale increase */
+  box-shadow: 0 0 10px rgba(244, 114, 182, 0.3) !important; /* Soft pink glow */
+  z-index: 9999 !important;
+  position: relative !important;
+}
+
+@keyframes loading-pulse-adding {
+  0% {
+    opacity: 0.7;
+    background: rgba(34, 197, 94, 0.3);
+  }
+  100% {
+    opacity: 1.0;
+    background: rgba(34, 197, 94, 0.6);
+  }
+}
+
+@keyframes loading-pulse-removing {
+  0% {
+    opacity: 0.7;
+    background: rgba(244, 114, 182, 0.3);
+  }
+  100% {
+    opacity: 1.0;
+    background: rgba(244, 114, 182, 0.6);
+  }
+}
+
+/* Legacy keyframes - keep for any other uses */
+@keyframes loading-pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1.0);
+  }
+  100% {
+    opacity: 1.0;
+    transform: scale(1.2);
+  }
+}
+
+.notechat-note-chip__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 4px;
+}
+
+.notechat-note-chip__remove {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 0 2px;
+  margin-left: 2px;
+  line-height: 1;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.notechat-note-chip__remove:hover {
+  background-color: var(--background-modifier-error-hover);
+  color: var(--text-error);
+}
+
+.notechat-no-notes {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 13px;
+  padding: 4px 0;
+}
+
+/* Note Source Tabs */
+.notechat-note-source-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.notechat-note-source-tabs__tab {
+  padding: 8px 16px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  flex: 1;
+  text-align: center;
+  border-radius: 4px 4px 0 0;
+}
+
+.notechat-note-source-tabs__tab:hover {
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover);
+}
+
+.notechat-note-source-tabs__tab.is-active {
+  color: var(--interactive-accent);
+  border-bottom-color: var(--interactive-accent);
+  background-color: var(--background-primary);
+}
+
+/* Add Note Controls */
+.notechat-add-note-controls {
+  display: flex;
+  gap: 0px;
+  margin-top: 8px;
+}
+
+.notechat-add-current-button {
+  padding: 8px 16px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  border-radius: 4px 4px 0 0;
+  flex: 1;
+  text-align: center;
+}
+
+.notechat-add-current-button:hover:not(:disabled) {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+
+.notechat-add-current-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--background-modifier-form-field);
+}
+
+/* Recent Notes Tab Styling */
+.notechat-recent-notes-tab {
+  padding: 12px;
+}
+
+.notechat-recent-notes-tab__empty {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  font-size: 13px;
+}
+
+.notechat-recent-notes-tab__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notechat-recent-note-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background-color: var(--background-secondary-alt);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  font-size: 13px;
+  color: var(--text-normal);
+}
+
+.notechat-recent-note-chip:hover {
+  background-color: var(--background-modifier-hover);
+  border-color: var(--background-modifier-border-hover);
+}
+
+.notechat-recent-note-chip:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+}
+
+.notechat-recent-note-chip__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+}
+
+.notechat-recent-note-chip__add-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-muted);
+  background-color: var(--background-modifier-border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.notechat-recent-note-chip:hover .notechat-recent-note-chip__add-icon {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+/* Search Notes Tab Styling */
+.notechat-search-notes-tab {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notechat-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-normal);
+  font-size: 14px;
+}
+
+.notechat-search-input:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+}
+
+.notechat-search-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notechat-search-results__message {
+  color: var(--text-muted);
+  font-style: italic;
+  text-align: center;
+  font-size: 13px;
+  padding: 10px 0;
+}
+
+.notechat-search-result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 4px;
+  background-color: var(--background-secondary-alt);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  font-size: 13px;
+  color: var(--text-normal);
+}
+
+.notechat-search-result-item:hover {
+  background-color: var(--background-modifier-hover);
+  border-color: var(--background-modifier-border-hover);
+}
+
+.notechat-search-result-item:focus {
+  outline: none;
+  border-color: var(--interactive-accent);
+}
+
+.notechat-search-result-item__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+}
+
+.notechat-search-result-item__add-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--text-muted);
+  background-color: var(--background-modifier-border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.notechat-search-result-item:hover .notechat-search-result-item__add-icon {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+}
+
+/* Add this new rule */
+.notechat-plugin-view-container .view-content {
+  padding: 0 !important;
+  height: 100%;
+}
+
+/* Streaming message styles */
+.streaming-message {
+  opacity: 0.9;
+  background: linear-gradient(135deg, var(--background-primary) 0%, var(--background-secondary) 100%);
+  border-left: 3px solid var(--text-accent);
+  transition: all 0.3s ease;
+}
+
+.streaming-indicator {
+  color: var(--text-accent);
+  font-weight: 600;
+  animation: pulse 1.5s infinite;
+  margin-left: 8px;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.streaming-message .message-text {
+  min-height: 20px;
+}
+
+/* TTS Button Styles */
+.tts-button {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.tts-button.playing {
+  background-color: var(--color-accent);
+  color: var(--text-on-accent);
+}
+
+.tts-button.playing:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.tts-button.generating {
+  background-color: var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.tts-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tts-error-indicator {
+  cursor: pointer;
+  margin-left: 4px;
+  font-size: 14px;
+  color: var(--color-red);
+  transition: opacity 0.2s ease;
+}
+
+.tts-error-indicator:hover {
+  opacity: 0.7;
+} 

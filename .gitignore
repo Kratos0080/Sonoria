@@ -1,0 +1,102 @@
+# IMPORTANT: Before committing to public repo, ensure no API keys are hardcoded in source files
+# All API keys should be loaded from environment variables or .env files
+
+# Dependencies
+node_modules/
+.npm
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# Build outputs
+build/
+dist/
+lib/
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# IDE and editor files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Internal Cursor IDE files
+.cursor/
+.cursorignore
+.cursorindexingignore
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Obsidian specific
+data.json
+
+# Internal SpecStory history
+.specstory/
+# SpecStory explanation file
+.specstory/.what-is-this.md
+
+# Internal documentation directories (not for public release)
+Core Docs/
+Doc for development/
+docs/
+
+# Build verification log
+build-verification.txt
+
+# Development artifacts
+backup/
+*.ui-mock.html
+lint_final.txt
+*.bak
+*.backup
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Archive files (development artifacts)
+*.zip
+*.tar.gz
+*.rar
+
+# Main build output (will be generated during build)
+main.js

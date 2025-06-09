@@ -1,0 +1,46 @@
+# GitHub Actions CI Workflow for NoteChat Plugin
+
+name: NoteChat CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Read .nvmrc
+        id: nvm
+        run: echo "::set-output name=NODE_VERSION::$(cat .nvmrc)" # Read Node version from .nvmrc
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }} # Use version from .nvmrc
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci # Use clean install for CI
+
+      - name: Run TypeScript Check
+        run: npm run typecheck
+
+      - name: Run Linter
+        run: npm run lint -- --max-warnings 0 # Fail on warnings too
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Run Production Build
+        run: npm run build:prod # Use the production build script 
