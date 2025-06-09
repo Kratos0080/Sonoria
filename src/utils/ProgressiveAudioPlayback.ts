@@ -46,7 +46,7 @@ export class ProgressiveAudioPlayback {
     if (this.audioContextReady) return;
 
     try {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      this.audioContext = new (window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext)();
       
       // Resume audio context if it starts in suspended state
       if (this.audioContext.state === 'suspended') {
@@ -229,7 +229,7 @@ export class ProgressiveAudioPlayback {
           try {
             const { Notice } = await import('obsidian');
             new Notice('🔊 Click the play button to hear the AI response', 4000);
-          } catch (noticeError) {
+          } catch (_noticeError) {
             console.log('🔊 Progressive Audio: Click the play button to hear the AI response');
           }
           

@@ -12,7 +12,8 @@ export class GeminiClient implements AIClient {
   private _apiKey: string;
   private _model: string;
   // private _genAI: GoogleGenerativeAI;
-  private _genAI: any; // Placeholder during beta
+  // @ts-expect-error - Disabled during beta testing to avoid third-party cookies
+  private __genAI: null = null; // Disabled during beta testing to avoid third-party cookies
   // private _isInitialized: boolean = false; // Used in original implementation (commented during beta)
   
   /**
@@ -42,7 +43,7 @@ export class GeminiClient implements AIClient {
     if (!this._apiKey) {
       console.warn("GeminiClient: API key is missing on initialization. Client will not function.");
       // this._genAI = {} as GoogleGenerativeAI;
-      this._genAI = {}; // Placeholder
+      this.__genAI = null; // Placeholder
       // this._isInitialized = false;
     } else {
       this.initializeClient();
@@ -122,14 +123,14 @@ export class GeminiClient implements AIClient {
   // 🔧 BETA FIX: Original generateNoteSummary implementation commented out during beta
   /*
   public async generateNoteSummary_ORIGINAL(noteContent: string): Promise<string> {
-    if (!this._genAI) {
-      await this.waitForClient();
+    if (!this.__genAI) {
+      await this.__waitForClient();
     }
 
     try {
       // Ensure we have a valid client
-      if (!this._genAI) {
-        await this.waitForClient();
+      if (!this.__genAI) {
+        await this.__waitForClient();
       }
 
       // Ensure noteContent is a string
@@ -140,7 +141,7 @@ export class GeminiClient implements AIClient {
       console.log('Generating summary with model:', this._model);
       
       // Create the gemini model instance
-      const model = this._genAI.getGenerativeModel({ model: this._model });
+      const model = this.__genAI.getGenerativeModel({ model: this._model });
       
       // Set up safety settings for Gemini 2.0 models
       const generationConfig = {
@@ -174,7 +175,7 @@ export class GeminiClient implements AIClient {
         if (this._model.includes('2.0') && generationError.message?.includes('not found')) {
           console.log('GeminiClient: Attempting fallback to Gemini 1.5 for summary generation');
           
-          const fallbackModel = this._genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+          const fallbackModel = this.__genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
           const fallbackResult = await fallbackModel.generateContent({
             contents: [
               {
@@ -214,14 +215,14 @@ export class GeminiClient implements AIClient {
   // 🔧 BETA FIX: Original generateBriefNoteSummary implementation commented out during beta
   /*
   public async generateBriefNoteSummary_ORIGINAL(noteContent: string): Promise<string> {
-    if (!this._genAI) {
-      await this.waitForClient();
+    if (!this.__genAI) {
+      await this.__waitForClient();
     }
 
     try {
       // Ensure we have a valid client
-      if (!this._genAI) {
-        await this.waitForClient();
+      if (!this.__genAI) {
+        await this.__waitForClient();
       }
 
       // Ensure noteContent is a string
@@ -232,7 +233,7 @@ export class GeminiClient implements AIClient {
       console.log('Generating brief summary with model:', this._model);
       
       // Create the gemini model instance
-      const model = this._genAI.getGenerativeModel({ model: this._model });
+      const model = this.__genAI.getGenerativeModel({ model: this._model });
       
       // Set up generation config for a shorter response
       const generationConfig = {
@@ -266,7 +267,7 @@ export class GeminiClient implements AIClient {
         if (this._model.includes('2.0') && generationError.message?.includes('not found')) {
           console.log('GeminiClient: Attempting fallback to Gemini 1.5 for brief summary generation');
           
-          const fallbackModel = this._genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+          const fallbackModel = this.__genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
           const fallbackResult = await fallbackModel.generateContent({
             contents: [
               {
@@ -300,11 +301,15 @@ export class GeminiClient implements AIClient {
    * @returns AI-generated response
    */
   public async handleConversationMessage(
-    messages: Message[], 
-    systemPrompt: string
+    _messages: Message[], 
+    _systemPrompt: string
   ): Promise<string> {
-    if (!this._genAI) {
-      await this.waitForClient();
+    // 🔧 BETA FIX: Return error message during beta testing
+    throw new Error("GeminiClient temporarily disabled during beta testing to avoid third-party cookie warnings");
+
+    /*
+    if (!this.__genAI) {
+      await this.__waitForClient();
     }
 
     try {
@@ -312,7 +317,7 @@ export class GeminiClient implements AIClient {
       const truncatedSystemPrompt = sanitizedSystemPrompt; // Use full prompt
       
       try {
-        const model = this._genAI.getGenerativeModel({
+        const model = this.__genAI.getGenerativeModel({
           model: this._model,
           generationConfig: {
             maxOutputTokens: 2048,
@@ -366,7 +371,7 @@ export class GeminiClient implements AIClient {
         // Build a simpler prompt for fallback
         const fallbackPrompt = `System Context:\n${truncatedSystemPrompt}\n\nConversation History:\n${messages.map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`).join('\n')}\n\nPlease respond to the last message.`;
         
-        const modelInstance = this._genAI.getGenerativeModel({ 
+        const modelInstance = this.__genAI.getGenerativeModel({ 
           model: this._model, 
           generationConfig: { maxOutputTokens: 2048, temperature: 0.7, topP: 0.95 }
         });
@@ -385,6 +390,7 @@ export class GeminiClient implements AIClient {
       console.error('Error handling conversation message:', error);
       throw error;
     }
+    */
   }
 
   /**
@@ -394,11 +400,15 @@ export class GeminiClient implements AIClient {
    * @returns Structured note content
    */
   public async generateStructuredNote(
-    messages: Message[], 
-    noteContent: string
+    _messages: Message[], 
+    _noteContent: string
   ): Promise<string> {
-    if (!this._genAI) {
-      await this.waitForClient();
+    // 🔧 BETA FIX: Return error message during beta testing
+    throw new Error("GeminiClient temporarily disabled during beta testing to avoid third-party cookie warnings");
+
+    /*
+    if (!this.__genAI) {
+      await this.__waitForClient();
     }
 
     try {
@@ -414,7 +424,7 @@ export class GeminiClient implements AIClient {
       let modelInstance;
       
       try {
-        modelInstance = this._genAI.getGenerativeModel({ 
+        modelInstance = this.__genAI.getGenerativeModel({ 
           model: this._model,
           generationConfig: {
             maxOutputTokens: 4096,
@@ -427,7 +437,7 @@ export class GeminiClient implements AIClient {
         console.log('GeminiClient: Falling back to gemini-1.5-pro for structured note generation');
         
         // Fallback to 1.5-pro which is good at structured outputs
-        modelInstance = this._genAI.getGenerativeModel({ 
+        modelInstance = this.__genAI.getGenerativeModel({ 
           model: 'gemini-1.5-pro',
           generationConfig: {
             maxOutputTokens: 4096,
@@ -493,7 +503,7 @@ export class GeminiClient implements AIClient {
         
         // Try with a different model if available
         try {
-          const fallbackModel = this._genAI.getGenerativeModel({ 
+          const fallbackModel = this.__genAI.getGenerativeModel({ 
             model: 'gemini-1.5-flash',
             generationConfig: {
               maxOutputTokens: 2048,
@@ -525,24 +535,16 @@ export class GeminiClient implements AIClient {
       console.error('Error generating structured note:', error);
       throw error;
     }
+    */
   }
   
   /**
    * Wait for the client to be initialized
    * This is needed because we're using dynamic imports
    */
-  private async waitForClient(): Promise<void> {
-    let attempts = 0;
-    const maxAttempts = 5;
-    
-    while (!this._genAI && attempts < maxAttempts) {
-      console.log(`GeminiClient: Waiting for client initialization (attempt ${attempts + 1}/${maxAttempts})...`);
-      await new Promise(resolve => setTimeout(resolve, 500));
-      attempts++;
-    }
-    
-    if (!this._genAI) {
-      throw new Error('Gemini client initialization timed out');
-    }
+  // @ts-expect-error - Disabled during beta testing
+  private async __waitForClient(): Promise<void> {
+    // 🔧 BETA FIX: Client is disabled during beta testing
+    throw new Error('Gemini client disabled during beta testing');
   }
 } 

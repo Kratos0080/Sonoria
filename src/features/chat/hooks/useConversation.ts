@@ -311,7 +311,7 @@ export function useConversation() {
   const canStopGeneration = useMemo(() => {
     const result = hasAbortController && isProcessing;
     return result;
-  }, [conversationManager, hasAbortController, isProcessing]);
+  }, [hasAbortController, isProcessing]);
 
   // Use manager's isLoading for AI generation, hook's isLoading for other operations
   const managerIsLoading = conversationManager?.['isLoading'] ?? false;
