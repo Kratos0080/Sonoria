@@ -1,7 +1,7 @@
 {
-  "id": "Sonoria",
+  "id": "sonoria",
   "name": "Sonoria",
-  "version": "0.8.1-beta",
+  "version": "1.0.0",
   "minAppVersion": "1.5.0",
   "description": "We believe the most natural way to interact with your notes is by using your voice. Sonoria lets you speak a question and hear your vault answer—ideas flow, hands stay free. It listens, thinks with the context you choose, then provide its insight with beautiful voice, weaving capture and conversation into a single, effortless rhythm.",
   "author": "Philips F",
