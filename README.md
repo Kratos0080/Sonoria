@@ -1,4 +1,5 @@
 ![Sonoria – voice powered chat for Obsidian notes](SonoriaImage.png)
+<img width="1023" alt="image" src="https://github.com/user-attachments/assets/55e5a32d-3856-44fd-b2e5-0bc583ca9c7c" />
 
 # Sonoria for Obsidian
 
